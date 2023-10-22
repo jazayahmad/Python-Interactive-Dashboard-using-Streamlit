@@ -17,8 +17,7 @@ if fl is not None:
     df = pd.read_csv(filename, encoding= "ISO-8859-1")
 else:
     os.chdir(r"/home/jazay/learning_proj/pythonInteractive_dashboard")
-    df = pd.read_csv("Superstore.csv", encoding= "ISO-8859-1")
-
+    df = pd.read_excel("Superstore.xls")
 
 col1, col2 = st.columns((2))
 df["Order Date"] = pd.to_datetime(df["Order Date"])
@@ -76,7 +75,8 @@ category_df = filtered_df.groupby(by = ["Category"], as_index = False)["Sales"].
 
 with col1:
     st.subheader("Category wise Sales")
-    fig = px.bar(category_df, x= "Category", y = "Sales", text = ["${:,.2f}".format(x) for x in category_df["Sales"]], template="seaborn")
+    fig = px.bar(category_df, x = "Category", y = "Sales", text = ["${:,.2f}".format(x) for x in category_df["Sales"]],
+                    template = "seaborn")
     st.plotly_chart(fig, use_container_width=True, height = 200)
 
 with col2:
